@@ -1,50 +1,16 @@
-const getAllModuleName = catchAsync(async (req, res) => {
-  const result = await ModuleServices.getAllServiceFromDB(req.query);
+import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
+import { AuthServices } from "./auth.service";
 
+const signUpUser = catchAsync(async (req, res) => {
+  const result = await AuthServices.signUpUserIntoDB(req.body);
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'ModuleName are retrieved succesfully!',
+    message: "User registered successfully",
     data: result,
-  });
-});
+  })
+})
 
-const getSingleModuleName = catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const result = await ModuleServices.getSingleServiceFromDB(id);
-
-    res.status(httpStatus.OK).json({
-        success: true,
-        message: 'ModuleName is retrieved succesfully!',
-        data: result,
-      });
-});
-
-const updateModuleName = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const { faculty } = req.body;
-  const result = await ModuleServices.updateServiceIntoDB(id, faculty);
-
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: 'ModuleName is updated succesfully!',
-    data: result,
-  });
-});
-
-const deleteModuleName = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await ModuleServices.deleteServiceFromDB(id);
-
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: 'ModuleName is deleted succesfully!',
-    data: result,
-  });
-});
-
-export const moduleControllers = {
-  getAllModuleName,
-  getSingleModuleName,
-  deleteModuleName,
-  updateModuleName,
+export const AuthControllers = {
+  signUpUser
 };

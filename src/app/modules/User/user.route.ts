@@ -2,12 +2,12 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/', moduleControllers.getAllModuleName);
+// router.get('/', moduleControllers.getAllModuleName);
 
-router.get('/:id', moduleControllers.getSingleModuleName);
+// router.get('/:id', moduleControllers.getSingleModuleName);
 
-router.patch('/:id', moduleControllers.updateModuleName);
+// router.patch('/:id', moduleControllers.updateModuleName);
 
-router.delete('/:id', moduleControllers.deleteModuleName);
+// router.delete('/:id', moduleControllers.deleteModuleName);
 
-export const ModuleRoutes = router;
+export const UserRoutes = router;

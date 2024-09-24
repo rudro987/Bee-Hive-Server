@@ -1,11 +1,18 @@
-const router = express.Router();
+import { Router } from "express";
+import validateRequest from "../../middlewares/validateRequest";
+import { UserValidations } from "../User/user.validation";
+import { AuthControllers } from "./auth.controller";
 
-router.get('/', moduleControllers.getAllModuleName);
+const router = Router();
 
-router.get('/:id', moduleControllers.getSingleModuleName);
+router.post('/signup', validateRequest(UserValidations.userValidationSchema), AuthControllers.signUpUser);
 
-router.patch('/:id', moduleControllers.updateModuleName);
+// router.get('/', moduleControllers.getAllModuleName);
 
-router.delete('/:id', moduleControllers.deleteModuleName);
+// router.get('/:id', moduleControllers.getSingleModuleName);
 
-export const ModuleRoutes = router;
+// router.patch('/:id', moduleControllers.updateModuleName);
+
+// router.delete('/:id', moduleControllers.deleteModuleName);
+
+export const AuthRoutes = router;
