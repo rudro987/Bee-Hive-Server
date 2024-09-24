@@ -20,7 +20,7 @@ const userSchema = new Schema<TUserTypes, UserModel>(
     password: {
       type: String,
       required: true,
-      select: 0,
+      select: false,
     },
     phone: {
       type: String,
@@ -39,6 +39,7 @@ const userSchema = new Schema<TUserTypes, UserModel>(
     isDeleted: {
       type: Boolean,
       default: false,
+      select: false,
     },
   },
   {

@@ -6,6 +6,7 @@ const signUpUser = catchAsync(async (req, res) => {
   const result = await AuthServices.signUpUserIntoDB(req.body);
   res.status(httpStatus.OK).json({
     success: true,
+    statusCode: httpStatus.OK,
     message: "User registered successfully",
     data: result,
   })
