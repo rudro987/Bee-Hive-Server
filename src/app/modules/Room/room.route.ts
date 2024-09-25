@@ -9,4 +9,6 @@ const router = Router();
 
 router.post('/', auth(USER_ROLE.admin), validateRequest(RoomValidation.roomValidationSchema), RoomControllers.createRoom);
 
+router.get('/', RoomControllers.getAlllRooms);
+
 export const RoomRoutes = router;

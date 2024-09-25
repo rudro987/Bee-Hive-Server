@@ -12,10 +12,16 @@ const createRoomIntoDB = async (payload: TRoomType) => {
   }
 
   const result = await Room.create(payload);
+  
+  return result;
+};
 
+const getAllRoomsFromDB = async () => {
+  const result = await Room.find();
   return result;
 };
 
 export const RoomServices = {
   createRoomIntoDB,
+  getAllRoomsFromDB
 };
