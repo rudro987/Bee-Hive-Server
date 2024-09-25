@@ -11,4 +11,6 @@ router.post('/', auth(USER_ROLE.admin), validateRequest(RoomValidation.roomValid
 
 router.get('/', RoomControllers.getAlllRooms);
 
+router.get('/:roomId', RoomControllers.getSingleRoom);
+
 export const RoomRoutes = router;
