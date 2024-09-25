@@ -1,29 +1,30 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { NextFunction, Request, Response } from "express";
-import { TUserRole } from "../modules/User/user.interface";
-import catchAsync from "../utils/catchAsync";
-import AppError from "../errors/AppError";
-import httpStatus from "http-status";
+import { NextFunction, Request, Response } from 'express';
+import { TUserRole } from '../modules/User/user.interface';
+import catchAsync from '../utils/catchAsync';
+import AppError from '../errors/AppError';
+import httpStatus from 'http-status';
 import config from '../config';
 import { User } from '../modules/User/user.model';
 
-
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const tokenHeaders = req.headers.authorization?.split(' ');
+    const token = tokenHeaders?.[1];
 
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You are not authorized!',
+      );
     }
 
     const decoded = jwt.verify(
-        token,
-        config.jwt_refresh_secret as string,
-      ) as JwtPayload;
+      token,
+      config.jwt_access_secret as string,
+    ) as JwtPayload;
 
     const { userEmail, role } = decoded;
-
-    console.log('decoded: ', decoded)
 
     const user = await User.isUserExists(userEmail);
 
@@ -40,7 +41,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'You are not authorized  hi!',
+        "You are not authorized!",
       );
     }
 

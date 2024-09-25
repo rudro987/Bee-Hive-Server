@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { TErrorSources, TGenericErrorResponse } from "./errors.types";
-
+import { TErrorSources, TGenericErrorResponse } from './errors.types';
 
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
   // Extract value within double quotes using regex
@@ -13,7 +12,7 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
   const errorSources: TErrorSources = [
     {
       path: '',
-      message: `${extractedMessage} is already exists`,
+      message: `${extractedMessage} already exists`,
     },
   ];
 
