@@ -12,7 +12,7 @@ const createRoomIntoDB = async (payload: TRoomType) => {
   }
 
   const result = await Room.create(payload);
-  
+
   return result;
 };
 
@@ -26,13 +26,17 @@ const getSingleRoomFromDB = async (id: string) => {
   return result;
 };
 
-const updateRoomIntoDB = async (
-  id: string,
-  payload: Partial<TRoomType>,
-) => {
-  const result = await Room.findOneAndUpdate(
-    { _id: id },
-    payload,
+const updateRoomIntoDB = async (id: string, payload: Partial<TRoomType>) => {
+  const result = await Room.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
+const deleteRoomFromDB = async (id: string) => {
+  const result = await Room.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
     {
       new: true,
     },
@@ -44,5 +48,6 @@ export const RoomServices = {
   createRoomIntoDB,
   getAllRoomsFromDB,
   getSingleRoomFromDB,
-  updateRoomIntoDB
+  updateRoomIntoDB,
+  deleteRoomFromDB,
 };

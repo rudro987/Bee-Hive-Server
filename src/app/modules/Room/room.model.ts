@@ -33,6 +33,12 @@ const roomScehma = new Schema<TRoomType, RoomModel>({
   },
 });
 
+// Query Middleware
+roomScehma.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
 roomScehma.statics.isRoomExists = async function(roomNo: number) {
   return await Room.findOne({ roomNo })
 }

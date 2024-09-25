@@ -13,6 +13,8 @@ router.get('/', RoomControllers.getAlllRooms);
 
 router.get('/:roomId', RoomControllers.getSingleRoom);
 
-router.patch('/:roomId', auth(USER_ROLE.admin), validateRequest(RoomValidation.updateRoomValidationSchema),RoomControllers.updateRoom);
+router.put('/:roomId', auth(USER_ROLE.admin), validateRequest(RoomValidation.updateRoomValidationSchema),RoomControllers.updateRoom);
+
+router.delete('/:roomId', auth(USER_ROLE.admin), RoomControllers.deleteRoom);
 
 export const RoomRoutes = router;
