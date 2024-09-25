@@ -27,7 +27,7 @@ const signUpUserIntoDB = async (payload: TUserTypes) => {
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExists(payload.email);
-
+  
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
@@ -42,10 +42,15 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not match');
   }
 
-  const userDoc = (user as unknown) as Document;
-  const jwtPayload = userDoc.toObject();
+  const jwtPayload = {
+    userEmail: user.email,
+    role: user.role
+  };
 
-  delete jwtPayload.password;
+  const userDoc = (user as unknown) as Document;
+
+  const userData = userDoc.toObject();
+  delete userData.password;
   
   const accessToken = createToken(jwtPayload, config.jwt_access_secret as string, config.jwt_access_expires_in as string);
 
@@ -55,6 +60,7 @@ const loginUser = async (payload: TLoginUser) => {
   return {
     accessToken,
     refreshToken,
+    userData
   }
 }
 

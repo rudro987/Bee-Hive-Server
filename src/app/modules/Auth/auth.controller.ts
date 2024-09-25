@@ -17,15 +17,7 @@ const signUpUser = catchAsync(async (req, res) => {
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
-  const { accessToken, refreshToken } = result;
-
-  let decoded;
-
-  try {
-    decoded = jwt.verify(accessToken, config.jwt_access_secret as string)
-  } catch (err) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'Not authorized!');
-  }
+  const { accessToken, refreshToken, userData } = result;
 
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
@@ -37,7 +29,7 @@ const loginUser = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     message: "User logged in successfully",
     token: accessToken,
-    data: decoded,
+    data: userData,
   })
 
 })

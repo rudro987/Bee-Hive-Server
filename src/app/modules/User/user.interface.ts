@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { Model } from "mongoose";
 import { USER_ROLE } from "./user.constant";
 
-export type TUserTypes = {
+export interface TUserTypes {
   name: string;
   email: string;
   password: string;
@@ -12,7 +13,7 @@ export type TUserTypes = {
 };
 
 export interface UserModel extends Model<TUserTypes> {
-  isUserExists(email: string) : Promise<TUserTypes | null>;
+  isUserExists(email: string): Promise<TUserTypes>;
   isPasswordMatched(
     plainTextPassword: string,
     hashedPassword: string,
