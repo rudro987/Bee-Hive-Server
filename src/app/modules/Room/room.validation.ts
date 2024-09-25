@@ -26,6 +26,23 @@ const roomValidationSchema = z.object({
   }),
 });
 
+const updateRoomValidationSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+
+    roomNo: z.number().optional(),
+
+    floorNo: z.number().optional(),
+
+    capacity: z.number().min(1, 'Capacity must be at least 1').optional(),
+
+    pricePerSlot: z.number().min(0, 'Price per slot must be a positive number').optional(),
+
+    amenities: z.array(z.string()).optional(),
+  }),
+});
+
 export const RoomValidation = {
-  roomValidationSchema
+  roomValidationSchema,
+  updateRoomValidationSchema
 }

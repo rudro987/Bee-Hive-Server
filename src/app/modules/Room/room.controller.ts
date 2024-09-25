@@ -36,8 +36,25 @@ const getSingleRoom = catchAsync(async (req, res) => {
     })
 });
 
+const updateRoom = catchAsync(async (req, res) => {
+  const { roomId } = req.params;
+  const result =
+    await RoomServices.updateRoomIntoDB(
+      roomId,
+      req.body,
+    );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Room updated successfully",
+      data: result,
+    })
+});
+
 export const RoomControllers = {
   createRoom,
   getAlllRooms,
-  getSingleRoom
+  getSingleRoom,
+  updateRoom
 };
