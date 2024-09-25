@@ -1,4 +1,5 @@
 import { Model } from "mongoose";
+import { USER_ROLE } from "./user.constant";
 
 export type TUserTypes = {
   name: string;
@@ -12,4 +13,10 @@ export type TUserTypes = {
 
 export interface UserModel extends Model<TUserTypes> {
   isUserExists(email: string) : Promise<TUserTypes | null>;
+  passwordMatch(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean>;
 }
+
+export type TUserRole = keyof typeof USER_ROLE;

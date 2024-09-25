@@ -7,4 +7,6 @@ const router = Router();
 
 router.post('/signup', validateRequest(UserValidations.userValidationSchema), AuthControllers.signUpUser);
 
+router.post('/login')
+
 export const AuthRoutes = router;
