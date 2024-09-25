@@ -41,10 +41,7 @@ const userSchema = new Schema<TUserTypes, UserModel>(
       default: false,
       select: false,
     },
-  },
-  {
-    timestamps: true,
-  },
+  }
 );
 
 // secure password using bcrypt and save into data
@@ -59,9 +56,16 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.statics.isUserExists = async function(email: string) {
-  const existingUser = await this.findOne({ email });
+  const existingUser = await User.findOne({ email }).select('+password');
   return existingUser;
 }
+
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
 
 export const User = model<TUserTypes, UserModel>(
   'User',
