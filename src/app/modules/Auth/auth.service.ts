@@ -1,3 +1,4 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { TUserTypes } from '../User/user.interface';
@@ -56,7 +57,6 @@ const loginUser = async (payload: TLoginUser) => {
 
   const refreshToken = createToken(jwtPayload, config.jwt_refresh_secret as string, config.jwt_refresh_expires_in as string);
   
-
   return {
     accessToken,
     refreshToken,
@@ -64,7 +64,44 @@ const loginUser = async (payload: TLoginUser) => {
   }
 }
 
+const refreshToken = async (token: string) => {
+  const decoded = jwt.verify(
+    token,
+    config.jwt_refresh_secret as string,
+  ) as JwtPayload;
+
+  const { userEmail } = decoded;
+
+  const user = await User.isUserExists(userEmail);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+  }
+
+  const isDeleted = user?.isDeleted;
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+  }
+
+  const jwtPayload = {
+    userEmail: user.email,
+    role: user.role
+  };
+
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
+
+  return {
+    accessToken,
+  };
+};
+
 export const AuthServices = {
   signUpUserIntoDB,
-  loginUser
+  loginUser,
+  refreshToken
 };
