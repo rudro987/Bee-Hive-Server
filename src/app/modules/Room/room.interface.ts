@@ -1,21 +1,15 @@
-export type TEnumTypes = 'male' | 'female' | 'other';
-export type TUserTypes = {
-};
+import { Model } from "mongoose";
 
-export interface ExampleModel extends Model<TUserTypes> {
-  // eslint-disable-next-line no-unused-vars
-  isUserExists(id: string): Promise<TUserTypes | null>;
-  // instance methods for checking if the user exists
-  isUserExistsByCustomId(id: string): Promise<TUser>;
-  // instance methods for checking if passwords are matched
-  isPasswordMatched(
-    plainTextPassword: string,
-    hashedPassword: string,
-  ): Promise<boolean>;
-  isJWTIssuedBeforePasswordChanged(
-    passwordChangedTimestamp: Date,
-    jwtIssuedTimestamp: number,
-  ): boolean;
+export type TRoomType = {
+  name: string;
+  roomNo: number;
+  floorNo: number;
+  capacity: number;
+  pricePerSlot: number;
+  amenities: string[];
+  isDeleted: boolean
 }
 
-export type TUserRole = keyof typeof USER_ROLE;
+export interface RoomModel extends Model<TRoomType> {
+  isRoomExists(roomNo: number): Promise<TRoomType>;
+}

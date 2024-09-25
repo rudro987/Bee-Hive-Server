@@ -1,11 +1,7 @@
-const router = express.Router();
+import { Router } from "express";
 
-router.get('/', moduleControllers.getAllModuleName);
+const router = Router();
 
-router.get('/:id', moduleControllers.getSingleModuleName);
 
-router.patch('/:id', moduleControllers.updateModuleName);
-
-router.delete('/:id', moduleControllers.deleteModuleName);
 
 export const ModuleRoutes = router;
