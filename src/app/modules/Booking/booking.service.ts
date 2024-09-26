@@ -76,7 +76,10 @@ const createBookingsForSlotsIntoDB = async (
     await session.commitTransaction();
 
     const populatedResult = await Booking.findById(result[0]._id)
-      .populate('slots')
+      .populate({
+        path: 'slots',
+        options: { includeBooked: true },
+      })
       .populate('room')
       .populate('user');
 
@@ -92,14 +95,20 @@ const createBookingsForSlotsIntoDB = async (
 
 const getAllBookingsFromDB = async () => {
   const result = await Booking.find()
-    .populate('slots')
+    .populate({
+      path: 'slots',
+      options: { includeBooked: true },
+    })
     .populate('room')
     .populate('user');
 
   return result;
 };
 
-const updateBookingIntoDB = async (id: string, payload: Partial<TBookingsType>) => {
+const updateBookingIntoDB = async (
+  id: string,
+  payload: Partial<TBookingsType>,
+) => {
   const result = await Booking.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
@@ -121,5 +130,5 @@ export const BookingServices = {
   createBookingsForSlotsIntoDB,
   getAllBookingsFromDB,
   updateBookingIntoDB,
-  deleteBookingFromDB
+  deleteBookingFromDB,
 };

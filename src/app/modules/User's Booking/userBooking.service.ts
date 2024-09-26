@@ -12,7 +12,10 @@ const getUserBookingsFromDB = async (userFromToken: any) => {
     }
 
     const bookings = await Booking.find({ user: user._id })
-      .populate('slots')
+    .populate({
+      path: 'slots',
+      options: { includeBooked: true },
+    })
       .populate('room')
       .select('-user')
     

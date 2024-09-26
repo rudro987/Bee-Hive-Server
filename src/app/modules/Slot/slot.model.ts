@@ -25,10 +25,14 @@ const slotSchema = new Schema<TSlotType, SlotModel>({
   },
 });
 
-// slotSchema.pre('find', function (next) {
-//   this.find({ isBooked: { $ne: true } });
-//   next();
-// });
+
+slotSchema.pre('find', function (next) {
+  const queryOptions = this.getOptions();
+  if (!queryOptions.includeBooked) {
+    this.find({ isBooked: { $ne: true } });
+  }
+  next();
+});
 
 slotSchema.statics.createSlotsForRoom = async function (payload) {
   const { room, date, startTime, endTime } = payload;

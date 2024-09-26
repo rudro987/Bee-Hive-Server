@@ -4,6 +4,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { SlotValidation } from './slot.validation';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../User/user.constant';
+import noDataFound from '../../middlewares/noDataFound';
 
 const router = Router();
 
@@ -11,9 +12,9 @@ router.post(
   '/',
   auth(USER_ROLE.admin),
   validateRequest(SlotValidation.slotCreationValidationSchema),
-  SlotControllers.createSlots,
+  SlotControllers.createSlots
 );
 
-router.get('/availability', SlotControllers.getAlllRooms);
+router.get('/availability', SlotControllers.getAlllRooms, noDataFound);
 
 export const SlotRoutes = router;
