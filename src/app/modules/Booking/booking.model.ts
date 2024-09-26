@@ -29,7 +29,6 @@ const bookingSchema = new Schema<TBookingsType>({
     },
     totalAmount: {
       type: Number,
-      required: true,
     },
     isConfirmed: {
       type: String,

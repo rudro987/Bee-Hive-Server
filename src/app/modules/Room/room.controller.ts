@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import { RoomServices } from './room.service';
-import AppError from '../../errors/AppError';
 
 const createRoom = catchAsync(async (req, res) => {
   const result = await RoomServices.createRoomIntoDB(req.body);
