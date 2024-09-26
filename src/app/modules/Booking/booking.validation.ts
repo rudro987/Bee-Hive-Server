@@ -15,6 +15,16 @@ const bookingValidationSchema = z.object({
   }),
 });
 
+const updateValidationSchema = z.object({
+  body: z.object({
+    date: z.string().optional(),
+    slots: z.array(z.string()).optional(),
+    room: z.string().optional(),
+    user: z.string().optional(),
+  }),
+});
+
 export const BookingsValidation = {
   bookingValidationSchema,
+  updateValidationSchema
 };

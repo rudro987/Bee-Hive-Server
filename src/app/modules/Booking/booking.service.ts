@@ -99,7 +99,15 @@ const getAllBookingsFromDB = async () => {
   return result;
 };
 
+const updateBookingIntoDB = async (id: string, payload: Partial<TBookingsType>) => {
+  const result = await Booking.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 export const BookingServices = {
   createBookingsForSlotsIntoDB,
   getAllBookingsFromDB,
+  updateBookingIntoDB
 };

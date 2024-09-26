@@ -14,6 +14,10 @@ router.post(
   BookingControllers.createBookingsForSlots,
 );
 
-router.get('/', auth(USER_ROLE.admin), BookingControllers.getAllBookings)
+router.get('/', auth(USER_ROLE.admin), BookingControllers.getAllBookings);
+
+router.put('/:bookingId', auth(USER_ROLE.admin), validateRequest(BookingsValidation.updateValidationSchema), BookingControllers.updateBooking);
+
+// router.delete('/:bookingId', auth(USER_ROLE.admin), BookingControllers.deleteBooking);
 
 export const BookingRoutes = router;
