@@ -1,11 +1,17 @@
-const router = express.Router();
+import { Router } from 'express';
+import { SlotController } from './slot.controller';
+import validateRequest from '../../middlewares/validateRequest';
+import { SlotValidation } from './slot.validation';
+import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../User/user.constant';
 
-router.get('/', moduleControllers.getAllModuleName);
+const router = Router();
 
-router.get('/:id', moduleControllers.getSingleModuleName);
+router.post(
+  '/',
+  auth(USER_ROLE.admin),
+  validateRequest(SlotValidation.slotCreationValidationSchema),
+  SlotController.createSlots,
+);
 
-router.patch('/:id', moduleControllers.updateModuleName);
-
-router.delete('/:id', moduleControllers.deleteModuleName);
-
-export const ModuleRoutes = router;
+export const SlotRoutes = router;

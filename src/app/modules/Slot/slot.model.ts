@@ -1,167 +1,68 @@
-const exampleNameSchema = new Schema<TNameTypes>({
-  firstName: {
-    type: String,
-    required: [true, 'First Name is required'],
-    trim: true,
-    maxlength: [20, 'Name can not be more than 20 characters'],
-  },
-  middleName: {
-    type: String,
-    trim: true,
-  },
-  lastName: {
-    type: String,
-    trim: true,
-    required: [true, 'Last Name is required'],
-    maxlength: [20, 'Name can not be more than 20 characters'],
-  },
-});
+import { Schema, model } from 'mongoose';
+import { SlotModel, TSlotType } from './slot.interface';
 
-const exampleUserSchema = new Schema<TUserTypes, ExampleModel>({
-  id: {
-    type: String,
-    required: [true, 'ID is required'],
-    unique: true,
-  },
-  user: {
+const slotSchema = new Schema<TSlotType, SlotModel>({
+  room: {
     type: Schema.Types.ObjectId,
-    required: [true, 'User id is required'],
-    unique: true,
-    ref: 'User',
+    ref: 'Room',
+    required: true,
   },
-  designation: {
+  date: {
     type: String,
-    required: [true, 'Designation is required'],
+    required: true,
   },
-  name: {
-    type: exampleNameSchema,
-    required: [true, 'Name is required'],
-  },
-  gender: {
+  startTime: {
     type: String,
-    enum: {
-      values: ['male, female', 'other'],
-      message: '{VALUE} is not a valid gender',
-    },
-    required: [true, 'Gender is required'],
+    required: true,
   },
-  dateOfBirth: { type: Date },
-  email: {
+  endTime: {
     type: String,
-    required: [true, 'Email is required'],
-    unique: true,
+    required: true,
   },
-  contactNo: { type: String, required: [true, 'Contact number is required'] },
-  emergencyContactNo: {
-    type: String,
-    required: [true, 'Emergency contact number is required'],
-  },
-  bloogGroup: {
-    type: String,
-    enum: {
-      values: BloodGroup,
-      message: '{VALUE} is not a valid blood group',
-    },
-  },
-  presentAddress: {
-    type: String,
-    required: [true, 'Present address is required'],
-  },
-  permanentAddress: {
-    type: String,
-    required: [true, 'Permanent address is required'],
-  },
-  profileImg: { type: String, default: '' },
-  academicDepartment: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'Acadcemic Department is required'],
-    ref: 'AcademicDepartment',
-  },
-  academicFaculty: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'Acadcemic Faculty is required'],
-    ref: 'AcademicFaculty',
-  },
-  isDeleted: {
+  isBooked: {
     type: Boolean,
     default: false,
   },
-}, {
-  toJSON: {
-    virtuals: true,
-  },
 });
 
-// generating full name
-exampleUserSchema.virtual('fullName').get(function () {
-  return (
-    this?.name?.firstName +
-    '' +
-    this?.name?.middleName +
-    '' +
-    this?.name?.lastName
-  );
-});
+slotSchema.statics.createSlotsForRoom = async function (payload) {
+    const { room, date, startTime, endTime } = payload;
+  
+    const slotDuration = 60;
+  
+    const start = parseInt(startTime.split(':')[0]) * 60 + parseInt(startTime.split(':')[1]);
+    const end = parseInt(endTime.split(':')[0]) * 60 + parseInt(endTime.split(':')[1]);
+  
+    const totalDuration = end - start;
+    const numberOfSlots = totalDuration / slotDuration;
+  
+    const slots: TSlotType[] = [];
+  
+    for (let i = 0; i < numberOfSlots; i++) {
 
-// secure password using bcrypt and save into data
-exampleUserSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this; // doc
-  // hashing password and save into DB
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
+      const slotStartTimeInMinutes = start + i * slotDuration;
 
-// set '' after saving password
-exampleUserSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
+      const slotEndTimeInMinutes = slotStartTimeInMinutes + slotDuration;
+  
+      const slotStartTime = formatTime(slotStartTimeInMinutes);
+      const slotEndTime = formatTime(slotEndTimeInMinutes);
+  
+      slots.push({
+        room,
+        date,
+        startTime: slotStartTime,
+        endTime: slotEndTime,
+        isBooked: false,
+      });
+    }
+  
+    return this.insertMany(slots);
+  };
 
-// filter out deleted documents
-exampleUserSchema.pre('find', function (next) {
-  this.find({ isDeleted: { ne: true } });
-  next();
-});
+  function formatTime(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+  }
 
-exampleUserSchema.pre('findOne', function (next) {
-  this.find({ isDeleted: { ne: true } });
-  next();
-});
-
-exampleUserSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ match: { isDeleted: { ne: true } } });
-  next();
-});
-
-// static methods
-// checking if user is already exist!
-exampleUserSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Faculty.findOne({ id });
-  return existingUser;
-};
-
-exampleUserSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id }).select('+password');
-};
-
-exampleUserSchema.statics.isPasswordMatched = async function (
-  plainTextPassword,
-  hashedPassword,
-) {
-  return await bcrypt.compare(plainTextPassword, hashedPassword);
-};
-
-exampleUserSchema.statics.isJWTIssuedBeforePasswordChanged = function (
-  passwordChangedTimestamp: Date,
-  jwtIssuedTimestamp: number,
-) {
-  const passwordChangedTime =
-    new Date(passwordChangedTimestamp).getTime() / 1000;
-  return passwordChangedTime > jwtIssuedTimestamp;
-};
-
-export const Example = model<TUserTypes, ExampleModel>('Example', exampleUserSchema);
+export const Slot = model<TSlotType, SlotModel>('Slot', slotSchema);
