@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { SlotController } from './slot.controller';
+import { SlotControllers } from './slot.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import { SlotValidation } from './slot.validation';
 import auth from '../../middlewares/auth';
@@ -11,7 +11,9 @@ router.post(
   '/',
   auth(USER_ROLE.admin),
   validateRequest(SlotValidation.slotCreationValidationSchema),
-  SlotController.createSlots,
+  SlotControllers.createSlots,
 );
+
+router.get('/availability', SlotControllers.getAlllRooms);
 
 export const SlotRoutes = router;

@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
-import { SlotService } from './slot.service';
+import { SlotServices } from './slot.service';
 
 const createSlots = catchAsync(async (req, res) => {
-  const result = await SlotService.createSlotsForRoom(req.body);
+  const result = await SlotServices.createSlotsForRoom(req.body);
 
   res.status(httpStatus.OK).json({
     success: true,
@@ -13,6 +13,18 @@ const createSlots = catchAsync(async (req, res) => {
   });
 });
 
-export const SlotController = {
+const getAlllRooms = catchAsync(async (req, res) => {
+    const result = await SlotServices.getAllSlotsFromDB(req.query);
+  
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Available slots retrieved successfully',
+      data: result,
+    });
+  });
+
+export const SlotControllers = {
   createSlots,
+  getAlllRooms
 };

@@ -9,7 +9,7 @@ const router = Router();
 
 router.post('/', auth(USER_ROLE.admin), validateRequest(RoomValidation.roomValidationSchema), RoomControllers.createRoom);
 
-router.get('/', RoomControllers.getAlllRooms);
+router.get('/', RoomControllers.getAllRooms);
 
 router.get('/:roomId', RoomControllers.getSingleRoom);
 

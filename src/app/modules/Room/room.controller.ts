@@ -13,7 +13,7 @@ const createRoom = catchAsync(async (req, res) => {
   });
 });
 
-const getAlllRooms = catchAsync(async (req, res) => {
+const getAllRooms = catchAsync(async (req, res) => {
   const result = await RoomServices.getAllRoomsFromDB();
 
   res.status(httpStatus.OK).json({
@@ -62,7 +62,7 @@ const deleteRoom = catchAsync(async (req, res) => {
 
 export const RoomControllers = {
   createRoom,
-  getAlllRooms,
+  getAllRooms,
   getSingleRoom,
   updateRoom,
   deleteRoom,
