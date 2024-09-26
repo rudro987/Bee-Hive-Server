@@ -90,6 +90,16 @@ const createBookingsForSlotsIntoDB = async (
   }
 };
 
+const getAllBookingsFromDB = async () => {
+  const result = await Booking.find()
+    .populate('slots')
+    .populate('room')
+    .populate('user');
+
+  return result;
+};
+
 export const BookingServices = {
   createBookingsForSlotsIntoDB,
+  getAllBookingsFromDB,
 };

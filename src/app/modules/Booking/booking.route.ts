@@ -14,4 +14,6 @@ router.post(
   BookingControllers.createBookingsForSlots,
 );
 
+router.get('/', auth(USER_ROLE.admin), BookingControllers.getAllBookings)
+
 export const BookingRoutes = router;
