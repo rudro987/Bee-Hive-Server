@@ -106,8 +106,20 @@ const updateBookingIntoDB = async (id: string, payload: Partial<TBookingsType>) 
   return result;
 };
 
+const deleteBookingFromDB = async (id: string) => {
+  const result = await Booking.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    {
+      new: true,
+    },
+  );
+  return result;
+};
+
 export const BookingServices = {
   createBookingsForSlotsIntoDB,
   getAllBookingsFromDB,
-  updateBookingIntoDB
+  updateBookingIntoDB,
+  deleteBookingFromDB
 };

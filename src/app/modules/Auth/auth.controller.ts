@@ -3,7 +3,6 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { AuthServices } from "./auth.service";
 import config from "../../config";
-import AppError from '../../errors/AppError';
 
 const signUpUser = catchAsync(async (req, res) => {
   const result = await AuthServices.signUpUserIntoDB(req.body);

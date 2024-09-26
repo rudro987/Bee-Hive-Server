@@ -3,6 +3,9 @@ import cors from 'cors';
 import express, { Application, Request, Response, Router } from 'express';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
+import appErrorHandler from './app/middlewares/appErrorHandler';
+
 
 const app: Application = express();
 
@@ -17,6 +20,10 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello from Bee-Hive server!');
 });
 
+app.use(appErrorHandler);
+
 app.use(globalErrorHandler);
+
+app.use(notFound);
 
 export default app;

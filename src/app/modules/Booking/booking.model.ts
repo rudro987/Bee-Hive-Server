@@ -36,5 +36,10 @@ const bookingSchema = new Schema<TBookingsType>({
       default: 'unconfirmed',
     },
   });
+
+  bookingSchema.pre('find', function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+  });
   
   export const Booking = model<TBookingsType>('Booking', bookingSchema);
