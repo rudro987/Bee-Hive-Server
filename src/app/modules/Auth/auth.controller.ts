@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { AuthServices } from "./auth.service";

@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
-import { TSlotCreation, TSlotType } from './slot.interface';
+import { TSlotCreation } from './slot.interface';
 import { Slot } from './slot.model';
 import QueryBuilder from '../../builder/QueryBuilder';
 

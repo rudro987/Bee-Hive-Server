@@ -1,4 +1,3 @@
-import { TUserTypes } from '../User/user.interface';
 import jwt from 'jsonwebtoken';
 
 export const createToken = (

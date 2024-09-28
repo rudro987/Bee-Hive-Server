@@ -10,7 +10,7 @@ export interface TUserTypes {
   role: 'admin' | 'user';
   address: string;
   isDeleted: boolean;
-};
+}
 
 export interface UserModel extends Model<TUserTypes> {
   isUserExists(email: string): Promise<TUserTypes>;

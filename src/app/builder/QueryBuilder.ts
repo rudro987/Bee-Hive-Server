@@ -1,3 +1,4 @@
+/* eslint-disable no-self-assign */
 import { FilterQuery, Query } from 'mongoose';
 
 class QueryBuilder<T> {
