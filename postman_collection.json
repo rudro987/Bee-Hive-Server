@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "a20b2ed5-a9e4-4acd-986f-bdbea33aa0b8",
+		"name": "Beehive-project-postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28855067"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign Up User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"BeeHive User\",\r\n  \"email\": \"user@beehive.com\",\r\n  \"password\": \"user123\",\r\n  \"phone\": \"1234567890\",\r\n  \"role\": \"user\",\r\n  \"address\": \"123 Main Street, City, Country\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/auth/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@beehive.com\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "Create Room",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMwMjg0MywiZXhwIjoxNzI3Mzg5MjQzfQ.X4GgUZ0Ccjdz0WSXICKbEy4s_cbJkTrD6ymwwjsdaig",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Meeting Room\",\r\n    \"roomNo\": 301,\r\n    \"floorNo\": 2,\r\n    \"capacity\": 10,\r\n    \"pricePerSlot\": 200,\r\n    \"amenities\": [\r\n        \"Whiteboard\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/rooms"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{beehive-local-url}}/rooms"
+					},
+					"response": []
+				},
+				{
+					"name": "Get single room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{beehive-local-url}}/rooms/66f480555c1f57f49792f58a"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a room",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMwMjg0MywiZXhwIjoxNzI3Mzg5MjQzfQ.X4GgUZ0Ccjdz0WSXICKbEy4s_cbJkTrD6ymwwjsdaig",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pricePerSlot\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/rooms/66f480555c1f57f49792f58a"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a room",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMwMjg0MywiZXhwIjoxNzI3Mzg5MjQzfQ.X4GgUZ0Ccjdz0WSXICKbEy4s_cbJkTrD6ymwwjsdaig",
+								"type": "text"
+							}
+						],
+						"url": "{{beehive-local-url}}/rooms/66f480555c1f57f49792f58a"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Slots",
+			"item": [
+				{
+					"name": "Create slot",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMwMjg0MywiZXhwIjoxNzI3Mzg5MjQzfQ.X4GgUZ0Ccjdz0WSXICKbEy4s_cbJkTrD6ymwwjsdaig",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"room\": \"66f480555c1f57f49792f58a\",\r\n    \"date\": \"2024-10-07\",\r\n    \"startTime\": \"10:00\",\r\n    \"endTime\": \"22:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/slots"
+					},
+					"response": []
+				},
+				{
+					"name": "Get available slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{beehive-local-url}}/slots/availability"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Create a Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ1c2VyQGJlZWhpdmUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MjczMjcyMzgsImV4cCI6MTcyNzQxMzYzOH0.8eL1Vx9RaMkIixoUK5PZ9Qa_UMrw92EiQzLRnT6VK40",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"date\": \"2024-10-05\",\r\n  \"slots\": [\"66f4b3346ad3b7934ddca3c6\", \"66f4b3346ad3b7934ddca3c9\"],\r\n  \"room\": \"66f47ee1f36b85474018e4bc\",\r\n  \"user\": \"66f45583805d0dfd48d3f910\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/bookings"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMyOTc4MCwiZXhwIjoxNzI3NDE2MTgwfQ.HwenesJVWKgOqlGG0teab3-D4lHtjOPwNTYZRXSeCag",
+								"type": "text"
+							}
+						],
+						"url": "{{beehive-local-url}}/bookings"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMyNjI1NSwiZXhwIjoxNzI3NDEyNjU1fQ.eVX8LQb8MX97NSPIMOYyrTP2TyENXMGqw5HbONPTVYo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isConfirmed\": \"confirmed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{beehive-local-url}}/bookings/66f4d81a751163157917f5e0"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhZG1pbkBiZWVoaXZlLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyNzMyNjI1NSwiZXhwIjoxNzI3NDEyNjU1fQ.eVX8LQb8MX97NSPIMOYyrTP2TyENXMGqw5HbONPTVYo",
+								"type": "text"
+							}
+						],
+						"url": "{{beehive-local-url}}/bookings/66f4f18ba8e265aab6c2fd71"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User bookings",
+			"item": [
+				{
+					"name": "Get User bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ1c2VyQGJlZWhpdmUuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MjczMjU0MTMsImV4cCI6MTcyNzQxMTgxM30.mkKOjFzkCcA2zKTOcptAZbkqhOU8BbW5vFxouj8LLUw",
+								"type": "text"
+							}
+						],
+						"url": "{{beehive-local-url}}/my-bookings"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
