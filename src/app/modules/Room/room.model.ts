@@ -23,6 +23,13 @@ const roomScehma = new Schema<TRoomType, RoomModel>({
     type: Number,
     required: true,
   },
+  image: {
+    type: String,
+    required: true,
+  },
+  gallery: {
+    type: [String],
+  },
   amenities: {
     type: [String],
     required: true,
@@ -39,7 +46,11 @@ roomScehma.pre('find', function (next) {
   next();
 });
 
-roomScehma.statics.isRoomExists = async function(roomNo: number) {
+roomScehma.statics.isRoomExists = async function(name: string) {
+  return await Room.findOne({ name })
+}
+
+roomScehma.statics.isRoomNoExists = async function(roomNo: number) {
   return await Room.findOne({ roomNo })
 }
 

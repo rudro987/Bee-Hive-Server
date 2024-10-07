@@ -31,7 +31,13 @@ const getAllSlotsFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
+const deleteSlotFromDB = async (id: string) => {
+  const result = await Slot.findByIdAndDelete(id);
+  return result;
+};
+
 export const SlotServices = {
   createSlotsForRoom,
   getAllSlotsFromDB,
+  deleteSlotFromDB
 };

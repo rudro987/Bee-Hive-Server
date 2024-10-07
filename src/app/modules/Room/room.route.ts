@@ -14,7 +14,7 @@ router.get('/', RoomControllers.getAllRooms, noDataFound);
 
 router.get('/:roomId', RoomControllers.getSingleRoom);
 
-router.put('/:roomId', auth(USER_ROLE.admin), validateRequest(RoomValidation.updateRoomValidationSchema),RoomControllers.updateRoom);
+router.patch('/:roomId', auth(USER_ROLE.admin), validateRequest(RoomValidation.updateRoomValidationSchema),RoomControllers.updateRoom);
 
 router.delete('/:roomId', auth(USER_ROLE.admin), RoomControllers.deleteRoom);
 

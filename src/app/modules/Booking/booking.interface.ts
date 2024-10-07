@@ -7,5 +7,5 @@ export type TBookingsType = {
     user: Types.ObjectId;
     isDeleted?: boolean;
     totalAmount?: number;
-    isConfirmed?: "confirmed" | "unconfirmed" 
+    isConfirmed?: "confirmed" | "unconfirmed"
 };

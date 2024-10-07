@@ -7,10 +7,13 @@ export type TRoomType = {
   floorNo: number;
   capacity: number;
   pricePerSlot: number;
+  image: string;
+  gallery?: string[];
   amenities: string[];
-  isDeleted: boolean
+  isDeleted?: boolean
 }
 
 export interface RoomModel extends Model<TRoomType> {
-  isRoomExists(roomNo: number): Promise<TRoomType>;
+  isRoomExists(name: string): Promise<TRoomType>;
+  isRoomNoExists(roomNo: number): Promise<TRoomType>;
 }

@@ -21,6 +21,7 @@ const updateValidationSchema = z.object({
     slots: z.array(z.string()).optional(),
     room: z.string().optional(),
     user: z.string().optional(),
+    isConfirmed: z.string().optional()
   }),
 });
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import httpStatus from 'http-status';
@@ -29,47 +30,62 @@ const signUpUserIntoDB = async (payload: TUserTypes) => {
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExists(payload.email);
-  
+
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
 
   const isDeleted = user?.isDeleted;
 
-  if(isDeleted) {
+  if (isDeleted) {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
   }
 
-  if (!(await User.isPasswordMatched(payload?.password, user?.password))){
+  if (!(await User.isPasswordMatched(payload?.password, user?.password))) {
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not match');
   }
 
   const jwtPayload = {
     userEmail: user.email,
-    role: user.role
+    role: user.role,
   };
 
-  const userDoc = (user as unknown) as Document;
+  const userDoc = user as unknown as Document;
 
   const userData = userDoc.toObject();
   delete userData.password;
-  
-  const accessToken = createToken(jwtPayload, config.jwt_access_secret as string, config.jwt_access_expires_in as string);
 
-  const refreshToken = createToken(jwtPayload, config.jwt_refresh_secret as string, config.jwt_refresh_expires_in as string);
-  
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
+
+  const refreshToken = createToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string,
+  );
+
   return {
     accessToken,
     refreshToken,
-    userData
-  }
-}
+    userData,
+  };
+};
 
 const refreshToken = async (token: string) => {
-  const decoded = jwt.verify(
-    token,
-    config.jwt_refresh_secret as string,
-  ) as JwtPayload;
+ 
+    let decoded;
+
+    try {
+      decoded = jwt.verify(
+        token,
+        config.jwt_refresh_secret as string,
+      ) as JwtPayload;
+    } catch (error) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'this is from refreshtoken route: unauthorized')
+    }
 
   const { userEmail } = decoded;
 
@@ -87,7 +103,7 @@ const refreshToken = async (token: string) => {
 
   const jwtPayload = {
     userEmail: user.email,
-    role: user.role
+    role: user.role,
   };
 
   const accessToken = createToken(
@@ -104,5 +120,5 @@ const refreshToken = async (token: string) => {
 export const AuthServices = {
   signUpUserIntoDB,
   loginUser,
-  refreshToken
+  refreshToken,
 };

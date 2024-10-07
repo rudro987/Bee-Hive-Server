@@ -4,15 +4,21 @@ import { TRoomType } from './room.interface';
 import { Room } from './room.model';
 
 const createRoomIntoDB = async (payload: TRoomType) => {
-  if (await Room.isRoomExists(payload.roomNo)) {
+  if (await Room.isRoomExists(payload.name)) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      `${payload.name} with this room number already exists!`,
+      `${payload.name} - This Room Name already exists!`,
+    );
+  }
+
+  if (await Room.isRoomNoExists(payload.roomNo)) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `${payload.roomNo} - This Room No is Already Assigned!`,
     );
   }
 
   const result = await Room.create(payload);
-
   return result;
 };
 

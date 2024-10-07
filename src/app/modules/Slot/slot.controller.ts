@@ -24,7 +24,20 @@ const getAlllRooms = catchAsync(async (req, res) => {
     });
   });
 
+  const deleteSlot = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await SlotServices.deleteSlotFromDB(id);
+  
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Slot deleted successfully',
+      data: result,
+    });
+  });
+
 export const SlotControllers = {
   createSlots,
-  getAlllRooms
+  getAlllRooms,
+  deleteSlot
 };
