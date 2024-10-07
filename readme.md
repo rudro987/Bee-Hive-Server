@@ -64,7 +64,7 @@ Description: This is a postman collection of all the API endpoints.Download this
 ### Clone the Repository:
 
 ```plain
-git clone https://github.com/rudro987/L2B3-assignment3.git
+git clone https://github.com/rudro987/Bee-Hive-Server.git
 ```
 
 ### Install Dependencies:
