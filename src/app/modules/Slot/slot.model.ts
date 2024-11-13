@@ -23,6 +23,9 @@ const slotSchema = new Schema<TSlotType, SlotModel>({
     type: Boolean,
     default: false,
   },
+},
+{
+  timestamps: true,
 });
 
 

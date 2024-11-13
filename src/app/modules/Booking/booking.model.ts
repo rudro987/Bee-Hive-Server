@@ -35,6 +35,9 @@ const bookingSchema = new Schema<TBookingsType>({
       enum: ['confirmed', 'unconfirmed'],
       default: 'unconfirmed',
     },
+  },
+  {
+    timestamps: true,
   });
 
   bookingSchema.pre('find', function (next) {

@@ -41,6 +41,9 @@ const userSchema = new Schema<TUserTypes, UserModel>(
       default: false,
       select: false,
     },
+  },
+  {
+    timestamps: true,
   }
 );
 

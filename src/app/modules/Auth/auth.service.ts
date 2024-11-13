@@ -18,8 +18,9 @@ const signUpUserIntoDB = async (payload: TUserTypes) => {
     );
   }
 
-  const result = await User.create(payload);
+  payload.role = 'user';
 
+  const result = await User.create(payload);
   const signUpUserResponse: any = result.toObject();
 
   delete signUpUserResponse.password;

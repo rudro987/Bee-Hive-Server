@@ -38,6 +38,9 @@ const roomScehma = new Schema<TRoomType, RoomModel>({
     type: Boolean,
     default: false,
   },
+},
+{
+  timestamps: true,
 });
 
 // Query Middleware
